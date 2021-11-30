@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+scan：当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。
+scanPeriod：设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒当scan为true时，此属性生效。默认的时间间隔为1分钟。
+debug：当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。
+
+1. 文件的命名和加载顺序有关
+   logback.xml早于application.yml加载，logback-spring.xml晚于application.yml加载
+   如果logback配置需要使用application.yml中的属性，需要命名为logback-spring.xml
+2. logback使用application.yml中的属性
+   使用springProperty才可使用application.yml中的值 可以设置默认值
+-->
+<configuration>
+
+    <springProperty name="log.path" source="log.path" defaultValue="log/"/>
+    <springProperty name="log.base" source="log.base" defaultValue="plus"/>
+    <springProperty name="log.level" source="log.level" defaultValue="info"/>
+    <springProperty name="max.size" source="log.size" defaultValue="100MB"/>
+    <springProperty name="max.live" source="log.live" defaultValue="10"/>
+
+    <contextName>consumer</contextName>
+
+    <!-- appender 定义格式化日志输出, name和class属性指定输出策略:控制台输出策略和文件输出策略  -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread]  %logger{56}.%method\(\): - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+    <appender name="file.all" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${log.path}/${log.base}/${log.base}_all.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.path}/${log.base}/${log.base}_all_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${max.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${max.live}</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread]  %logger{56}.%method\(\): - %msg%n
+            </pattern>
+            <charset>utf-8</charset>
+        </encoder>
+    </appender>
+    <appender name="file.info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${log.path}/${log.base}/${log.base}_info.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.path}/${log.base}/${log.base}_info_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${max.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${max.live}</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread]  %logger{56}.%method\(\): - %msg%n
+            </pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+    <appender name="file.error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${log.path}/${log.base}/${log.base}_err.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.path}/${log.base}/${log.base}_err_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${max.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${max.live}</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread]  %logger{56}.%method\(\): - %msg%n
+            </pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <appender name="file.async" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>256</queueSize>
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="file.all"/>
+    </appender>
+
+    <!-- root level设置日志级别; ref指定使用appender -->
+    <root level="${log.level}">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="file.async"/>
+        <appender-ref ref="file.error"/>
+        <appender-ref ref="file.info"/>
+    </root>
+
+</configuration>
