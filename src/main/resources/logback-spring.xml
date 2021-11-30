@@ -13,7 +13,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
 <configuration>
 
     <springProperty name="log.path" source="log.path" defaultValue="log/"/>
-    <springProperty name="log.base" source="log.base" defaultValue="plus"/>
+    <springProperty name="log.base" source="log.base" defaultValue="sfs"/>
     <springProperty name="log.level" source="log.level" defaultValue="info"/>
     <springProperty name="max.size" source="log.size" defaultValue="100MB"/>
     <springProperty name="max.live" source="log.live" defaultValue="10"/>
