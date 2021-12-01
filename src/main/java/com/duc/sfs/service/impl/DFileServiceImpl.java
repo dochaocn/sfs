@@ -58,7 +58,8 @@ public class DFileServiceImpl extends ServiceImpl<DFileMapper, DFile> implements
     public void uploadFile(MultipartFile file) {
         byte[] bytes;
         try {
-            try (BufferedInputStream bis = new BufferedInputStream(file.getInputStream()); ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            try (BufferedInputStream bis = new BufferedInputStream(file.getInputStream());
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 int len;
                 byte[] buffer = new byte[1024];
                 while ((len = bis.read(buffer)) != -1) {
@@ -95,9 +96,9 @@ public class DFileServiceImpl extends ServiceImpl<DFileMapper, DFile> implements
         String sizeStr;
         if (size > 1024L * 1024L * 1024L) { // GB
             sizeStr = size / (1024L * 1024L * 1024L) + "GB";
-        } else if (size > 1024L * 1024L) {  // MB
+        } else if (size > 1024L * 1024L) { // MB
             sizeStr = size / (1024L * 1024L) + "MB";
-        } else if (size > 1024L) {  // KB
+        } else if (size > 1024L) { // KB
             sizeStr = size / (1024L) + "KB";
         } else {
             sizeStr = size + "B";

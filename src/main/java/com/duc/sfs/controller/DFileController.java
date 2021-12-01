@@ -51,8 +51,10 @@ public class DFileController {
      * @return JsonMessage 封装数据
      */
     @PostMapping("/query")
-    public JsonMessage query(@RequestParam(required = false) Integer id, @RequestParam(required = false) String filename, @RequestParam(required = false) String date,
-                             @RequestParam(required = false, defaultValue = "0") Integer page, @RequestParam(required = false, defaultValue = "10") Integer size) {
+    public JsonMessage query(@RequestParam(required = false) Integer id,
+            @RequestParam(required = false) String filename, @RequestParam(required = false) String date,
+            @RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "10") Integer size) {
         JsonPage<DFile> jsonPage = new JsonPage<>();
         try {
             IPage<DFile> iPage = fileService.queryPageParam(id, filename, date, page, size);
@@ -96,7 +98,8 @@ public class DFileController {
         try (ServletOutputStream sos = response.getOutputStream()) {
             DFile file = fileService.queryFileById(id);
             response.reset();
-            response.setHeader("Content-Disposition", "attachment; filename=" + new String(file.getDFilename().getBytes(), "ISO8859-1"));
+            response.setHeader("Content-Disposition",
+                    "attachment; filename=" + new String(file.getDFilename().getBytes(), "ISO8859-1"));
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Methods", "POST");
             response.setHeader("Access-Control-Allow-Headers", "Access-Control");

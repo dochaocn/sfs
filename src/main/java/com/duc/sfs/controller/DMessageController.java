@@ -37,8 +37,10 @@ public class DMessageController {
     }
 
     @PostMapping("/query")
-    public JsonMessage query(@RequestParam(required = false) Integer id, @RequestParam(required = false) String key, @RequestParam(required = false) String date,
-                             @RequestParam(required = false, defaultValue = "0") Integer page, @RequestParam(required = false, defaultValue = "10") Integer size) {
+    public JsonMessage query(@RequestParam(required = false) Integer id, @RequestParam(required = false) String key,
+            @RequestParam(required = false) String date,
+            @RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "10") Integer size) {
         JsonPage<DMessage> jsonPage = new JsonPage<>();
         try {
             IPage<DMessage> iPage = messageService.queryPageParam(id, key, date, page, size);
