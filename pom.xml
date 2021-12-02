@@ -14,7 +14,7 @@
     <name>sfs</name>
     <description>sfs</description>
     <properties>
-        <java.version>16</java.version>
+        <java.version>8</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -104,6 +104,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
             <version>1.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.78</version>
         </dependency>
         <!--  word文件转html   -->
         <dependency>

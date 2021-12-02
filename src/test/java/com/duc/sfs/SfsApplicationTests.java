@@ -1,20 +1,26 @@
 package com.duc.sfs;
 
-import cn.hutool.core.date.LocalDateTimeUtil;
-import fr.opensagres.poi.xwpf.converter.xhtml.XHTMLConverter;
-import fr.opensagres.poi.xwpf.converter.xhtml.XHTMLOptions;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.text.StringEscapeUtils;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
+
+import javax.annotation.Resource;
+
+import com.duc.sfs.entity.Daily;
+import com.duc.sfs.service.DailyService;
+
+import org.apache.commons.text.StringEscapeUtils;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import cn.hutool.core.date.LocalDateTimeUtil;
+import fr.opensagres.poi.xwpf.converter.xhtml.XHTMLConverter;
+import fr.opensagres.poi.xwpf.converter.xhtml.XHTMLOptions;
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
 @Slf4j
@@ -27,6 +33,15 @@ class SfsApplicationTests {
         final String format = LocalDateTimeUtil.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
         System.out.println(format);
 
+    }
+
+    @Resource
+    private DailyService dailyService;
+    
+    @Test
+    void daily() {
+        dailyService.addDaily("2021-12-02");
+        Daily daily = dailyService.getByDay("2021-12-02");
     }
 
     @Test

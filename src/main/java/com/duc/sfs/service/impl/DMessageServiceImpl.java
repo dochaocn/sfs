@@ -10,6 +10,7 @@ import com.duc.sfs.enums.DeleteStatus;
 import com.duc.sfs.mapper.DMessageMapper;
 import com.duc.sfs.service.IDMessageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,6 +24,7 @@ import java.util.Arrays;
  * @author Dc
  * @since 2021-08-19
  */
+@Slf4j
 @Service
 public class DMessageServiceImpl extends ServiceImpl<DMessageMapper, DMessage> implements IDMessageService {
 
