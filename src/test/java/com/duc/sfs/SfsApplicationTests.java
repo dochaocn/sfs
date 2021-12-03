@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import com.duc.sfs.entity.Daily;
 import com.duc.sfs.service.DailyService;
 
+import com.duc.sfs.service.SmsService;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,14 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest
 @Slf4j
 class SfsApplicationTests {
+
+    @Resource
+    private SmsService smsService;
+    @Test
+    void sms() {
+        smsService.statistics();
+    }
+
 
     @Test
     void contextLoads() {
@@ -40,8 +49,8 @@ class SfsApplicationTests {
     
     @Test
     void daily() {
-        dailyService.addDaily("2021-12-02");
-        Daily daily = dailyService.getByDay("2021-12-02");
+        dailyService.addDaily("2021-12-04");
+        Daily daily = dailyService.getByDay("2021-12-04");
     }
 
     @Test

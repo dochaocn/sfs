@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -36,5 +37,12 @@ public class DDictionaryServiceImpl extends ServiceImpl<DDictionaryMapper, DDict
     public String queryValueByUniqueKey(String key) {
         DDictionary dictionary = this.queryDictionaryByUniqueKey(key);
         return dictionary == null ? null : dictionary.getDValue();
+    }
+
+    @Override
+    public List<DDictionary> queryDictionaryByUniqueKeyLike(String likeKey) {
+        QueryWrapper<DDictionary> wrapper = new QueryWrapper<>();
+        wrapper.likeRight("d_key", likeKey);
+        return this.list(wrapper);
     }
 }

@@ -3,6 +3,8 @@ package com.duc.sfs.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.duc.sfs.entity.DDictionary;
 
+import java.util.List;
+
 /**
  * <p>
  * 服务类
@@ -16,4 +18,6 @@ public interface IDDictionaryService extends IService<DDictionary> {
     DDictionary queryDictionaryByUniqueKey(String key);
 
     String queryValueByUniqueKey(String key);
+
+    List<DDictionary> queryDictionaryByUniqueKeyLike(String likeKey);
 }
