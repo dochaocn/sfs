@@ -55,9 +55,9 @@ public class TaskScheduleController {
     }
 
     @GetMapping("sendDailySms")
-    public JsonMessage sendDailySms() {
+    public JsonMessage sendDailySms(String param) {
         JsonMessage result = new JsonMessage();
-        Daily daily = dailyService.getByDay("2021-12-04");
+        Daily daily = dailyService.getByDay(param);
         String[] templateParam = new String[2];
         templateParam[0] = daily.getFxDate();
         templateParam[1] = daily.getTextDay() + "，" + daily.getTempMax() + "-" + daily.getTempMin();
