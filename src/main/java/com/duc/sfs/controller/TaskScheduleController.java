@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * <p>
@@ -31,6 +33,7 @@ import javax.annotation.Resource;
 @RequestMapping("/task")
 @EnableScheduling
 public class TaskScheduleController {
+    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Resource
     private DailyController dailyController;
@@ -41,12 +44,14 @@ public class TaskScheduleController {
 
     @Scheduled(cron = "0 0 12-17 * * ?")
     public void cron_1() {
-
+        String day = dtf.format(LocalDate.now().plusDays(1L));
+        this.execute("daily", day);
     }
 
     @Scheduled(cron = "0 0 21 * * ?")
     public void cron_2() {
-
+        String day = dtf.format(LocalDate.now().plusDays(1L));
+        this.sendDailySms(day);
     }
 
     @PostMapping("/execute")
