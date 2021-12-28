@@ -7,6 +7,9 @@ import com.duc.sfs.enums.ReturnCode;
 import com.duc.sfs.service.DailyService;
 import com.duc.sfs.service.SmsService;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +29,7 @@ import javax.annotation.Resource;
 @RestController
 @Slf4j
 @RequestMapping("/task")
+@EnableScheduling
 public class TaskScheduleController {
 
     @Resource
@@ -34,6 +38,16 @@ public class TaskScheduleController {
     private SmsService smsService;
     @Resource
     private DailyService dailyService;
+
+    @Scheduled(cron = "0 0 12-17 * * ?")
+    public void cron_1() {
+
+    }
+
+    @Scheduled(cron = "0 0 21 * * ?")
+    public void cron_2() {
+
+    }
 
     @PostMapping("/execute")
     public JsonMessage execute(String controller, String param) {
