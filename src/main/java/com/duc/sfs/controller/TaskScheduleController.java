@@ -37,6 +37,7 @@ public class TaskScheduleController {
 
     @GetMapping("/execute")
     public JsonMessage execute(String controller, String param) {
+        log.info("调度任务请求, controller={}, param={}", controller, param);
         JsonMessage result = new JsonMessage();
         if (StrUtil.isBlank(controller) || StrUtil.isBlank(param)) {
             result.setMessage("controller or param is blank");

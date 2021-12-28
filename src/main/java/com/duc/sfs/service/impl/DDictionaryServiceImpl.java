@@ -28,6 +28,7 @@ public class DDictionaryServiceImpl extends ServiceImpl<DDictionaryMapper, DDict
 
     @Override
     public DDictionary queryDictionaryByUniqueKey(String key) {
+        log.info("方法名={}, 参数={}", "queryDictionaryByUniqueKey", key);
         QueryWrapper<DDictionary> wrapper = new QueryWrapper<>();
         wrapper.eq("d_key", key);
         return this.getOne(wrapper);

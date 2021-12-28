@@ -51,6 +51,7 @@ class SfsApplicationTests {
     void daily() {
         dailyService.addDaily("2021-12-04");
         Daily daily = dailyService.getByDay("2021-12-04");
+        log.info("daily={}", daily);
     }
 
     @Test

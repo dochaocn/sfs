@@ -20,8 +20,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class Daily {
 
-    private static final long serialVersionUID = 1L;
-
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     private String fxDate; // 预报日期
