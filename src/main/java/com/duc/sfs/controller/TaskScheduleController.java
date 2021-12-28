@@ -8,7 +8,7 @@ import com.duc.sfs.service.DailyService;
 import com.duc.sfs.service.SmsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +35,7 @@ public class TaskScheduleController {
     @Resource
     private DailyService dailyService;
 
-    @GetMapping("/execute")
+    @PostMapping("/execute")
     public JsonMessage execute(String controller, String param) {
         log.info("调度任务请求, controller={}, param={}", controller, param);
         JsonMessage result = new JsonMessage();
@@ -54,10 +54,15 @@ public class TaskScheduleController {
         return result;
     }
 
-    @GetMapping("sendDailySms")
+    @PostMapping("sendDailySms")
     public JsonMessage sendDailySms(String param) {
         JsonMessage result = new JsonMessage();
         Daily daily = dailyService.getByDay(param);
+        if(daily == null || daily.getFxDate() == null) {
+            result.setMessage("daily is null");
+            result.setCode(ReturnCode._500.getCode());
+            return result;
+        }
         String[] templateParam = new String[2];
         templateParam[0] = daily.getFxDate();
         templateParam[1] = daily.getTextDay() + "，" + daily.getTempMax() + "-" + daily.getTempMin();
