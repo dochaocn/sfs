@@ -1,7 +1,7 @@
 package com.duc.sfs.mapper;
 
-import com.duc.sfs.entity.DFile;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.duc.sfs.entity.Daily;
 
 /**
  * <p>
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Dc
- * @since 2021-08-19
+ * @since 2021-12-01
  */
-public interface DFileMapper extends BaseMapper<DFile> {
+public interface DailyMapper extends BaseMapper<Daily> {
 
 }
